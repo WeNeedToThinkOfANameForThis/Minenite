@@ -1,0 +1,9 @@
+name: MineNite
+version: @version@
+main: org.minenite.plugin.MineNite
+authors: [AndrewAubury, PiggyPiglet]
+description: Play Fortnight inside minecraft
+commands:
+  minenite:
+    description: The main MineNite command
+    aliases: [mn, fortnite, fn]
