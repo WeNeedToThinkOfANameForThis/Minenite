@@ -29,8 +29,8 @@ public final class Build extends Command {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             MineNitePlayer MNPlayer = pm.getPlayer(p);
-            MNPlayer.sendMessage("&cBuilding Now");
-            new FlatBuilding().build(p.getLocation());
+            MNPlayer.sendMessage("&aBuilding Now");
+            new FlatBuilding().build(p.getLocation().subtract(0,1,0));
         }
 
         return false;

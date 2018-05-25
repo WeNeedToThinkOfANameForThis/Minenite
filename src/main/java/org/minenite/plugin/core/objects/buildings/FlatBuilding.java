@@ -19,11 +19,8 @@ public class FlatBuilding extends Building {
         setSizeZ(5);
         setSnapTo(5);
         setBuilding(new HashMap<Vector, Material>());
-        int count = 0;
         for(int i = 0; i<5;i++){
             for(int ii = 0; ii<5;ii++){
-                count++;
-                MineNite.getPlugin(MineNite.class).getServer().broadcastMessage(count+"");
                 getBuilding().put(new Vector(i,0,ii),Material.WOOD);
             }
         }
