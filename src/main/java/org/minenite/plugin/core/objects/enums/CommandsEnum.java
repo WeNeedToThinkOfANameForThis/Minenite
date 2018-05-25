@@ -8,5 +8,5 @@ package org.minenite.plugin.core.objects.enums;
 public enum CommandsEnum {
     TEST,
     GMC,
-    GMS
+    BUILD, GMS
 }
