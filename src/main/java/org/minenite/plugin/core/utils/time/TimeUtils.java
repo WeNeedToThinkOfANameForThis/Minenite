@@ -12,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 // https://www.piggypiglet.me
 // https://www.andrewa.pw
 // ------------------------------
-public final class TimeUtils {
+public  class TimeUtils {
     private MineNite mineNite = MineNite.getPlugin(MineNite.class);
 
     public void countdown(long seconds, CountdownFunction countdownFunction) {
-        long time = seconds / 20;
+        long time = seconds * 20;
         mineNite.getScheduler().runTaskLater(mineNite, countdownFunction, time);
     }
 }
