@@ -2,6 +2,7 @@ package org.minenite.plugin.events;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -97,6 +98,8 @@ public final class TestEvents implements Listener {
                             loc.getWorld().dropItem(loc, is);
                         }
                     }
+
+                    loc.getWorld().playEffect(loc.add(0,0.5,0), Effect.HEART,10);
                     //loc.getBlock().setType(Material.AIR);
 
                 }
