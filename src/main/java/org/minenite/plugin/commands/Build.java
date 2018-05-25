@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.minenite.plugin.core.framework.Command;
 import org.minenite.plugin.core.managers.PlayerManager;
+import org.minenite.plugin.core.objects.Building;
 import org.minenite.plugin.core.objects.MineNitePlayer;
 import org.minenite.plugin.core.objects.buildings.FlatBuilding;
 import org.minenite.plugin.core.objects.enums.CommandsEnum;
@@ -30,7 +31,10 @@ public final class Build extends Command {
             Player p = (Player) sender;
             MineNitePlayer MNPlayer = pm.getPlayer(p);
             MNPlayer.sendMessage("&aBuilding Now");
-            new FlatBuilding().build(p.getLocation().subtract(0,1,0));
+
+            Building build = new FlatBuilding();
+
+            new FlatBuilding().build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
         }
 
         return false;

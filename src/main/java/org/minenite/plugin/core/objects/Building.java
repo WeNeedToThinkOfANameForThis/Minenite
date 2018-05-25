@@ -26,7 +26,9 @@ public class Building {
         for(Vector v : building.keySet()){
             Location startLoc2 = startLoc.clone();
             startLoc2 = startLoc2.add(new Location(startLoc.getWorld(),v.getBlockX(),v.getBlockY(),v.getBlockZ()));
-            startLoc2.getBlock().setType(building.get(v));
+            if(startLoc2.getBlock().getType() == Material.AIR) {
+                startLoc2.getBlock().setType(building.get(v));
+            }
         }
     }
 }
