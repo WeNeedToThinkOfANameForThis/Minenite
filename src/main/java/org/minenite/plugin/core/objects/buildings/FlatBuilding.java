@@ -18,6 +18,10 @@ public class FlatBuilding extends Building {
         setSizeY(1);
         setSizeZ(5);
         setSnapTo(5);
+        recalculateBlocks();
+    }
+
+    public void recalculateBlocks(){
         setBuilding(new HashMap<Vector, Material>());
         for(int i = 0; i<getSizeX();i++){
             for(int ii = 0; ii<getSizeZ();ii++){

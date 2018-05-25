@@ -32,9 +32,10 @@ public final class Build extends Command {
             MineNitePlayer MNPlayer = pm.getPlayer(p);
             MNPlayer.sendMessage("&aBuilding Now");
 
-            Building build = new FlatBuilding();
+            FlatBuilding build = new FlatBuilding();
             build.setSizeX(Integer.parseInt(args[0]));
             build.setSizeZ(Integer.parseInt(args[1]));
+            build.recalculateBlocks();
             new FlatBuilding().build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
         }
 
