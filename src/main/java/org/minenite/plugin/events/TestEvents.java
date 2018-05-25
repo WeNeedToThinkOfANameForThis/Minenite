@@ -99,7 +99,7 @@ public final class TestEvents implements Listener {
                         }
                     }
 
-                    loc.getWorld().playEffect(loc.add(0,0.5,0), Effect.HEART,10);
+                    loc.getWorld().playEffect(loc.add(0.5,0.5,0.5), Effect.HEART,10);
                     //loc.getBlock().setType(Material.AIR);
 
                 }
