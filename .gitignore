@@ -2,3 +2,5 @@
 .gradle/
 spigot/
 build/
+.floo
+.flooignore
