@@ -93,7 +93,7 @@ public class MineNitePlayer {
             int finalI = i;
             tu.countdown(secs - i, () -> {
                 player.setLevel(finalI);
-                float f = ((100/secs)*finalI);
+                float f = ((100/secs)*finalI)/100;
                 player.setExp(f);
                 player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&a"+finalI),"",0,20,0);
                 sendMessage("&a"+ finalI);

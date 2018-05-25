@@ -99,7 +99,14 @@ public final class TestEvents implements Listener {
                         }
                     }
 
-                    loc.getWorld().playEffect(loc.add(0.5,0.5,0.5), Effect.HEART,10);
+                    MineNite mineNite = MineNite.getPlugin(MineNite.class);
+                    mineNite.getScheduler().scheduleSyncRepeatingTask(mineNite, new Runnable() {
+                        @Override
+                        public void run() {
+                            loc.getWorld().playEffect(loc.add(0.5,0.5,0.5), Effect.HEART,10);
+
+                        }
+                    },10,10);
                     //loc.getBlock().setType(Material.AIR);
 
                 }
