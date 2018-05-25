@@ -100,10 +100,11 @@ public final class TestEvents implements Listener {
                     }
 
                     MineNite mineNite = MineNite.getPlugin(MineNite.class);
+                    Location hearts = loc.add(0.5,0.5,0.5);
                     mineNite.getScheduler().scheduleSyncRepeatingTask(mineNite, new Runnable() {
                         @Override
                         public void run() {
-                            loc.getWorld().playEffect(loc.add(0.5,0.5,0.5), Effect.HEART,10);
+                            loc.getWorld().playEffect(hearts, Effect.HEART,20);
 
                         }
                     },10,10);
