@@ -17,10 +17,10 @@ import org.minenite.plugin.core.utils.player.XPUtils;
 // https://www.piggypiglet.me
 // https://www.andrewa.pw
 // ------------------------------
-public final class build extends Command {
+public final class Build extends Command {
     @Inject private PlayerManager pm;
 
-    public build() {
+    public Build() {
         super(CommandsEnum.BUILD);
     }
 

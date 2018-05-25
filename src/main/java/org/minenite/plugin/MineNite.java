@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.minenite.plugin.commands.Build;
 import org.minenite.plugin.commands.GMC;
 import org.minenite.plugin.commands.GMS;
 import org.minenite.plugin.commands.Test;
@@ -33,6 +34,7 @@ public final class MineNite extends JavaPlugin {
     @Inject private GMC gmc;
     @Inject private GMS gms;
     @Inject private Test test;
+    @Inject private Build build;
 
     @Override
     public void onEnable() {
@@ -55,7 +57,7 @@ public final class MineNite extends JavaPlugin {
                 getCommand("minenite").setExecutor(commandHandler);
 
                 Stream.of(
-                        gmc, gms, test
+                        gmc, gms, test, build
                 ).forEach(commandHandler.getCommands()::add);
                 break;
 
