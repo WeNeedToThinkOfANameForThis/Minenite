@@ -14,13 +14,13 @@ import java.util.HashMap;
 // ------------------------------
 public class FlatBuilding extends Building {
     public FlatBuilding(){
-        setSizeX(5);
+        setSizeX(10);
         setSizeY(1);
         setSizeZ(5);
         setSnapTo(5);
         setBuilding(new HashMap<Vector, Material>());
-        for(int i = 0; i<5;i++){
-            for(int ii = 0; ii<5;ii++){
+        for(int i = 0; i<getSizeX();i++){
+            for(int ii = 0; ii<getSizeZ();ii++){
                 getBuilding().put(new Vector(i,0,ii),Material.WOOD);
             }
         }
