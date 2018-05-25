@@ -29,7 +29,7 @@ public class Building {
             startLoc2 = startLoc2.add(new Location(startLoc.getWorld(),v.getBlockX(),v.getBlockY(),v.getBlockZ()));
             if(startLoc2.getBlock().getType() == Material.AIR) {
                 Location finalStartLoc = startLoc2;
-                MineNite.getPlugin(MineNite.class).getScheduler().runTask(MineNite.getPlugin(MineNite.class), new Runnable() {
+                MineNite.getPlugin(MineNite.class).getScheduler().runTaskAsynchronously(MineNite.getPlugin(MineNite.class), new Runnable() {
                     @Override
                     public void run() {
                         finalStartLoc.getBlock().setType(building.get(v));
