@@ -24,8 +24,8 @@ public class Building {
 
     public void build(Location startLoc){
         for(Vector v : building.keySet()){
-            Location startLoc2 = startLoc;
-            startLoc2 = startLoc2.add(v);
+            Location startLoc2 = startLoc.clone();
+            startLoc2 = startLoc2.add(new Location(startLoc.getWorld(),v.getBlockX(),v.getBlockY(),v.getBlockZ()));
             startLoc2.getBlock().setType(building.get(v));
         }
     }
