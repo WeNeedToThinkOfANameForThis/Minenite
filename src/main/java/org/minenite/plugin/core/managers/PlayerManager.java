@@ -1,8 +1,8 @@
-package org.minenite.plugin.managers;
+package org.minenite.plugin.core.managers;
 
 import com.google.inject.Singleton;
 import org.bukkit.entity.Player;
-import org.minenite.plugin.objects.MineNitePlayer;
+import org.minenite.plugin.core.objects.MineNitePlayer;
 
 import java.util.HashMap;
 import java.util.UUID;

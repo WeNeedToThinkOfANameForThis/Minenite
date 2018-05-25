@@ -19,9 +19,10 @@ repositories {
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
-
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     compile 'com.google.inject:guice:+'
+    compile 'commons-io:commons-io:+'
+    compile 'org.slf4j:slf4j-simple:+'
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

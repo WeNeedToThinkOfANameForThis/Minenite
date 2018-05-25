@@ -4,28 +4,26 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minenite.plugin.MineNite;
-import org.minenite.plugin.managers.PlayerManager;
-import org.minenite.plugin.objects.MineNitePlayer;
+import org.minenite.plugin.core.managers.PlayerManager;
+import org.minenite.plugin.core.objects.MineNitePlayer;
 
 @Singleton
 public final class TestEvents implements Listener {
     @Inject private PlayerManager playerManager;
-    @Inject private MineNite minenite;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
@@ -40,19 +38,27 @@ public final class TestEvents implements Listener {
 
     @EventHandler
     public void onCrafting(CraftItemEvent e){
-        e.setCancelled(true);
+        Player p = (Player) e.getWhoClicked();
+        MineNitePlayer mnPlayer = playerManager.getPlayer(p);
+        e.setCancelled(!mnPlayer.isAllowedToCraft());
     }
 
     @EventHandler
     public void onCraft(PrepareItemCraftEvent e){
-        e.getInventory().setResult(new ItemStack(Material.AIR));
+        Player p = (Player) e.getViewers().get(0);
+        MineNitePlayer mnPlayer = playerManager.getPlayer(p);
+        if(!mnPlayer.isAllowedToCraft()) {
+            e.getInventory().setResult(new ItemStack(Material.AIR));
+        }
     }
 
     @EventHandler
     public void onChestOpen(PlayerInteractEvent e){
-
         Block block = e.getClickedBlock();
 
+        if(e.getAction() != Action.RIGHT_CLICK_BLOCK){
+            return;
+        }
         if(e.getClickedBlock().getType() == Material.CHEST){
             if(e.getPlayer().isSneaking()){
                 return;
@@ -72,10 +78,13 @@ public final class TestEvents implements Listener {
             e.setCancelled(true);
 
             //mnPlayer.sendMessage("&c"+);
-            if(items == 0){
+            if(items == 0) {
                mnPlayer.sendMessage("&cThis chest is empty");
-               return;
+               Player player = e.getPlayer();
+                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 100f, 100f);
+                return;
             }
+
             mnPlayer.makeWait(new Runnable() {
                 @Override
                 public void run() {

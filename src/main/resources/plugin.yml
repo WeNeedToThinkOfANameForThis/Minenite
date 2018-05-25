@@ -2,7 +2,8 @@ name: MineNite
 version: @version@
 main: org.minenite.plugin.MineNite
 authors: [AndrewAubury, PiggyPiglet]
-description: Play Fortnight inside minecraft
+website: https://minenite.org
+description: Play Fortnite inside minecraft
 commands:
   minenite:
     description: The main MineNite command

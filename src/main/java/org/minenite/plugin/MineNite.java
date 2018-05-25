@@ -2,14 +2,21 @@ package org.minenite.plugin;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Singleton;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.minenite.plugin.commands.GMC;
+import org.minenite.plugin.commands.GMS;
+import org.minenite.plugin.commands.Test;
 import org.minenite.plugin.core.framework.BinderModule;
+import org.minenite.plugin.core.handlers.CommandHandler;
+import org.minenite.plugin.core.objects.enums.Registerables;
+import org.minenite.plugin.core.storage.yaml.MFile;
 import org.minenite.plugin.events.TestEvents;
-import org.minenite.plugin.managers.PlayerManager;
-import org.minenite.plugin.objects.MineNitePlayer;
+
+import java.util.stream.Stream;
+
+import static org.minenite.plugin.core.objects.enums.Registerables.*;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet & AndrewAubury 2018
@@ -17,22 +24,46 @@ import org.minenite.plugin.objects.MineNitePlayer;
 // https://www.andrewa.pw
 // ------------------------------
 
-public class MineNite extends JavaPlugin {
+public final class MineNite extends JavaPlugin {
+    @Inject private CommandHandler commandHandler;
+    @Inject private MFile mFile;
+
     @Inject private TestEvents testEvents;
 
-    @Inject private PlayerManager playerManager;
+    @Inject private GMC gmc;
+    @Inject private GMS gms;
+    @Inject private Test test;
 
-    @Getter private BukkitScheduler scheduler = getServer().getScheduler();
-    @Getter public static MineNite mineNite;
     @Override
-
-
     public void onEnable() {
-        mineNite = this;
         BinderModule module = new BinderModule(this);
         Injector injector = module.createInjector();
         injector.injectMembers(this);
 
-        getServer().getPluginManager().registerEvents(testEvents, this);
+        Stream.of(
+                FILES, COMMANDS, LISTENERS
+        ).forEach(this::register);
     }
+
+    private void register(Registerables register) {
+        switch (register) {
+            case FILES:
+                mFile.make("config", getDataFolder().getPath() + "/config.yml", "/config.yml");
+                break;
+
+            case COMMANDS:
+                getCommand("minenite").setExecutor(commandHandler);
+
+                Stream.of(
+                        gmc, gms, test
+                ).forEach(commandHandler.getCommands()::add);
+                break;
+
+            case LISTENERS:
+                getServer().getPluginManager().registerEvents(testEvents, this);
+                break;
+        }
+    }
+
+    @Getter private BukkitScheduler scheduler = getServer().getScheduler();
 }
