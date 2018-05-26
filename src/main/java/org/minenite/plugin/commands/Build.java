@@ -1,6 +1,7 @@
 package org.minenite.plugin.commands;
 
 import com.google.inject.Inject;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -36,7 +37,8 @@ public final class Build extends Command {
             build.setSizeX(Integer.parseInt(args[0]));
             build.setSizeZ(Integer.parseInt(args[1]));
             build.recalculateBlocks();
-            build.build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+            //build.build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+            p.sendBlockChange(p.getLocation().subtract(0,1,0), Material.TNT, (byte) 0);
         }
 
         return false;
