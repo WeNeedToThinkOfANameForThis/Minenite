@@ -6,6 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.HashMap;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.bukkit.util.Vector;
 import org.minenite.plugin.MineNite;
 
@@ -29,7 +32,19 @@ public class Building {
             startLoc2 = startLoc2.add(new Location(startLoc.getWorld(),v.getBlockX(),v.getBlockY(),v.getBlockZ()));
             if(startLoc2.getBlock().getType() == Material.AIR) {
                 Location finalStartLoc = startLoc2;
-                finalStartLoc.getBlock().setType(building.get(v));
+                finalStartLoc.getBlock().setType(Material.BARRIER);
+                ThreadLocalRandom r = ThreadLocalRandom.current();
+                // use floobits chat
+                int low = 1;
+                int high = 60;
+                int result = r.nextInt(high-low) + low;
+                MineNite mineNite = MineNite.getPlugin(MineNite.class);
+                mineNite.getScheduler().runTaskLater(mineNite, new Runnable() {
+                    @Override
+                    public void run() {
+                        finalStartLoc.getBlock().setType(building.get(v));
+                    }
+                },result);
             }
         }
     }
