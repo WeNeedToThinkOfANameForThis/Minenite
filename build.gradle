@@ -15,11 +15,15 @@ repositories {
     maven {
         url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
     }
+    maven {
+        url = 'http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/'
+    }
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly 'com.boydti:fawe-api:+'
     compile 'com.google.inject:guice:+'
     compile 'commons-io:commons-io:+'
     compile 'org.slf4j:slf4j-simple:+'
