@@ -9,6 +9,7 @@ import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.WorldEditAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.entity.BaseEntity;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.regions.Region;
 import lombok.Data;
@@ -16,6 +17,7 @@ import org.bukkit.Location;
 
 import java.util.*;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.minenite.plugin.MineNite;
@@ -58,25 +60,24 @@ public class Building {
                         return o1.compareToIgnoreCase(o2);
                     }
             });
-            String result = org.apache.commons.lang.StringUtils.join(stringList, ", ");
-           mn.getServer().broadcastMessage(result);
+
+            Location toPlace = startLoc;
+            toPlace = toPlace.add(getSizeX()/2,getSizeY()/2,getSizeZ()/2);
 
             for(String schem : stringList){
+                Location finalToPlace = toPlace;
                 BukkitTask bukkitTask = mn.getScheduler().runTaskLater(mn, new Runnable() {
                     @Override
                     public void run() {
-                        WorldEditAPI api = new WorldEditAPI(WorldEditPlugin.getPlugin(WorldEditPlugin.class));
 
-
-                        mn.getServer().broadcastMessage("Now placing: " + f.getPath() + "/" + schem);
+                    //mn.getServer().broadcastMessage("Now placing: " + f.getPath() + "/" + schem);
                         try {
-
-                            EditSession editSession = ClipboardFormat.SCHEMATIC.load(new File(f.getPath() + "/" + schem)).paste(BukkitUtil.getLocalWorld(startLoc.getWorld()),BukkitUtil.toVector(startLoc));
+                            EditSession editSession = ClipboardFormat.SCHEMATIC.load(new File(f.getPath() + "/" + schem)).paste(BukkitUtil.getLocalWorld(finalToPlace.getWorld()),BukkitUtil.toVector(finalToPlace));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                }, stringList.indexOf(schem) * 7);
+                }, stringList.indexOf(schem) * 5);
             }
 
         }else{
