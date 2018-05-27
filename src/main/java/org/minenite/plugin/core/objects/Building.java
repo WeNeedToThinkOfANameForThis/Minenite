@@ -3,16 +3,25 @@ package org.minenite.plugin.core.objects;
 import com.boydti.fawe.FaweAPI;
 import com.boydti.fawe.object.FaweQueue;
 
+import com.boydti.fawe.object.extent.FastWorldEditExtent;
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.WorldEditAPI;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.regions.Region;
 import lombok.Data;
 import org.bukkit.Location;
 
 import java.util.*;
 
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 import org.minenite.plugin.MineNite;
 import org.minenite.plugin.core.utils.string.StringUtils;
 
+import javax.xml.crypto.dsig.Transform;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -28,11 +37,11 @@ import java.io.IOException;
 
 @Data
 public class Building {
-    int snapTo;
-    int sizeX;
-    int sizeY;
-    int sizeZ;
-    String dir;
+    protected int snapTo;
+    protected int sizeX;
+    protected int sizeY;
+    protected int sizeZ;
+    protected String dir;
 
     ArrayList files = new ArrayList<>();
 
@@ -53,12 +62,21 @@ public class Building {
            mn.getServer().broadcastMessage(result);
 
             for(String schem : stringList){
-                mn.getScheduler().runTaskLater(mn, new Runnable() {
+                BukkitTask bukkitTask = mn.getScheduler().runTaskLater(mn, new Runnable() {
                     @Override
                     public void run() {
-                        mn.getServer().broadcastMessage("Now placing: "+f.getPath()+"/"+schem);
+                        WorldEditAPI api = new WorldEditAPI(WorldEditPlugin.getPlugin(WorldEditPlugin.class));
+
+
+                        mn.getServer().broadcastMessage("Now placing: " + f.getPath() + "/" + schem);
+                        try {
+
+                            EditSession editSession = ClipboardFormat.SCHEMATIC.load(new File(f.getPath() + "/" + schem)).paste(BukkitUtil.getLocalWorld(startLoc.getWorld()),BukkitUtil.toVector(startLoc));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                },stringList.indexOf(schem)*5);
+                }, stringList.indexOf(schem) * 7);
             }
 
         }else{
