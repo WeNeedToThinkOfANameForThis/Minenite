@@ -23,6 +23,6 @@ public class FlatBuilding extends Building {
     }
 
     public void recalculateBlocks(){
-        
+
     }
 }

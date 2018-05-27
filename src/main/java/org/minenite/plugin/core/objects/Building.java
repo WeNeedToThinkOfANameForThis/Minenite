@@ -3,6 +3,8 @@ package org.minenite.plugin.core.objects;
 import com.boydti.fawe.FaweAPI;
 import com.boydti.fawe.object.FaweQueue;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import lombok.Data;
 import org.bukkit.Location;
 
@@ -45,5 +47,7 @@ public class Building {
         }else{
             mn.getSlf4jLogger().debug("File Non-existent");
         }
+
+       // EditSession editSession = ClipboardFormat.SCHEMATIC.load(file).paste(world, position, allowUndo, !noAir, (Transform) null);
     }
 }
