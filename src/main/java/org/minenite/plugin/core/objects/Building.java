@@ -37,7 +37,7 @@ public class Building {
     ArrayList files = new ArrayList<>();
 
     public void build(Location startLoc){
-        FaweQueue queue = FaweAPI.createQueue(startLoc.getWorld().toString(), true);
+        //FaweQueue queue = FaweAPI.createQueue(startLoc.getWorld().toString(), true);
         MineNite mn = MineNite.getPlugin(MineNite.class);
         File f = new File(mn.getDataFolder().getPath()+"/schematics/"+dir+"/"+sizeX+"x"+sizeZ+"/");
         if(f.exists()){
