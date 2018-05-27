@@ -8,7 +8,7 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import lombok.Data;
 import org.bukkit.Location;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.minenite.plugin.MineNite;
 import org.minenite.plugin.core.utils.string.StringUtils;
@@ -42,8 +42,25 @@ public class Building {
         File f = new File(mn.getDataFolder().getPath()+"/schematics/"+dir+"/"+sizeX+"x"+sizeZ+"/");
         if(f.exists()){
             mn.getServer().broadcastMessage("File \""+f.getPath()+ "\" exist");
-            String result = org.apache.commons.lang.StringUtils.join(f.list(), ", ");
+            List<String> stringList = new ArrayList<String>(Arrays.asList(f.list()));
+            Collections.sort(stringList, new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return o1.compareToIgnoreCase(o2);
+                    }
+            });
+            String result = org.apache.commons.lang.StringUtils.join(stringList, ", ");
            mn.getServer().broadcastMessage(result);
+
+            for(String schem : stringList){
+                mn.getScheduler().runTaskLater(mn, new Runnable() {
+                    @Override
+                    public void run() {
+                        mn.getServer().broadcastMessage("Now placing: "+f.getPath()+"/"+schem);
+                    }
+                },stringList.indexOf(schem)*5);
+            }
+
         }else{
             mn.getServer().broadcastMessage("File Non-existent");
         }
