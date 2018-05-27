@@ -14,6 +14,8 @@ import org.minenite.plugin.core.handlers.CommandHandler;
 import org.minenite.plugin.core.objects.enums.Registerables;
 import org.minenite.plugin.core.storage.yaml.MFile;
 import org.minenite.plugin.events.TestEvents;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.Stream;
 
@@ -36,8 +38,10 @@ public final class MineNite extends JavaPlugin {
     @Inject private Test test;
     @Inject private Build build;
 
+    @Getter private final Logger slf4jLogger = LoggerFactory.getLogger(MineNite.class);
     @Override
     public void onEnable() {
+
         BinderModule module = new BinderModule(this);
         Injector injector = module.createInjector();
         injector.injectMembers(this);

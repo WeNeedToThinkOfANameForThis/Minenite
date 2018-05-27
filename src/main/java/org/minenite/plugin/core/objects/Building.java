@@ -2,20 +2,21 @@ package org.minenite.plugin.core.objects;
 
 import com.boydti.fawe.FaweAPI;
 import com.boydti.fawe.object.FaweQueue;
-import com.boydti.fawe.object.RunnableVal;
-import com.boydti.fawe.util.TaskManager;
+
 import lombok.Data;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
-import java.util.HashMap;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.util.Vector;
 import org.minenite.plugin.MineNite;
+import org.minenite.plugin.core.utils.string.StringUtils;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet & AndrewAubury 2018
@@ -29,31 +30,20 @@ public class Building {
     int sizeX;
     int sizeY;
     int sizeZ;
-    HashMap<Vector,Material> building = new HashMap<>();
+    String dir;
+
+    ArrayList files = new ArrayList<>();
 
     public void build(Location startLoc){
         FaweQueue queue = FaweAPI.createQueue(startLoc.getWorld().toString(), true);
-TaskManager.IMP.runUnsafe(queue,new Runnable() {
-    @Override
-    public void run() {
-
-        for(Vector v : building.keySet()){
-            Location startLoc2 = startLoc.clone();
-            startLoc2 = startLoc2.add(new Location(startLoc.getWorld(),v.getBlockX(),v.getBlockY(),v.getBlockZ()));
-            if(startLoc2.getBlock().getType() == Material.AIR) {
-                Location finalStartLoc = startLoc2;
-                finalStartLoc.getBlock().setType(Material.BARRIER);
-                ThreadLocalRandom r = ThreadLocalRandom.current();
-                int low = 1;
-                int high = 60;
-                int result = r.nextInt(high-low) + low;
-                MineNite mineNite = MineNite.getPlugin(MineNite.class);
-                mineNite.getScheduler().runTaskLater(mineNite, () -> finalStartLoc.getBlock().setType(building.get(v)),result);
-            }
+        MineNite mn = MineNite.getPlugin(MineNite.class);
+        File f = new File(mn.getDataFolder().getPath()+"/schematics/"+dir+"/"+sizeX+"x"+sizeZ+"/");
+        if(f.exists()){
+            mn.getSlf4jLogger().debug("File \""+f.getPath()+ "\" exist");
+            String result = org.apache.commons.lang.StringUtils.join(f.list(), ", ");
+            mn.getSlf4jLogger().debug(result);
+        }else{
+            mn.getSlf4jLogger().debug("File Non-existent");
         }
-
-    }
-});
-
     }
 }

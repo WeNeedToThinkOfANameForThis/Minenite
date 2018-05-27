@@ -4,6 +4,7 @@ main: org.minenite.plugin.MineNite
 authors: [AndrewAubury, PiggyPiglet]
 website: https://minenite.org
 description: Play Fortnite inside minecraft
+depends: [FastAsyncWorldEdit]
 commands:
   minenite:
     description: The main MineNite command
