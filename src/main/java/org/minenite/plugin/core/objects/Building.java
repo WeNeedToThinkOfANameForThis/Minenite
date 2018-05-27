@@ -41,11 +41,11 @@ public class Building {
         MineNite mn = MineNite.getPlugin(MineNite.class);
         File f = new File(mn.getDataFolder().getPath()+"/schematics/"+dir+"/"+sizeX+"x"+sizeZ+"/");
         if(f.exists()){
-            mn.getSlf4jLogger().debug("File \""+f.getPath()+ "\" exist");
+            mn.getServer().broadcastMessage("File \""+f.getPath()+ "\" exist");
             String result = org.apache.commons.lang.StringUtils.join(f.list(), ", ");
-            mn.getSlf4jLogger().debug(result);
+           mn.getServer().broadcastMessage(result);
         }else{
-            mn.getSlf4jLogger().debug("File Non-existent");
+            mn.getServer().broadcastMessage("File Non-existent");
         }
 
        // EditSession editSession = ClipboardFormat.SCHEMATIC.load(file).paste(world, position, allowUndo, !noAir, (Transform) null);
