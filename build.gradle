@@ -19,7 +19,7 @@ repositories {
         url = 'http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/'
     }
     maven{
-        url = 'http://maven.sk89q.com/artifactory/repo/'
+        url = 'http://maven.sk89q.com/repo/'
     }
 }
 
@@ -27,7 +27,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     compileOnly 'com.boydti:fawe-api:+'
-    compileOnly 'com.sk89q.worldedit:worldedit-bukkit-api:+'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:+'
     compile 'com.google.inject:guice:+'
     compile 'commons-io:commons-io:+'
     compile 'org.slf4j:slf4j-simple:+'
