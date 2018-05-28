@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.minenite.plugin.MineNite;
 import org.minenite.plugin.core.managers.PlayerManager;
 import org.minenite.plugin.core.objects.MineNitePlayer;
+import org.minenite.plugin.core.objects.buildings.FlatBuilding;
 
 @Singleton
 public final class TestEvents implements Listener {
@@ -54,6 +55,20 @@ public final class TestEvents implements Listener {
     }
 
     @EventHandler
+    public void buildingAttempt(PlayerInteractEvent e){
+        if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WOOD_STEP){
+                Player p  = e.getPlayer();
+                MineNitePlayer MNPlayer = playerManager.getPlayer(p);
+                MNPlayer.sendMessage("&aBuilding Now");
+                FlatBuilding build = new FlatBuilding();
+
+                build.build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+            }
+        }
+    }
+
+    @EventHandler
     public void onChestOpen(PlayerInteractEvent e){
         Block block = e.getClickedBlock();
 
@@ -71,7 +86,7 @@ public final class TestEvents implements Listener {
             Chest chest = (Chest) block.getState();
 
             int items = 0;
-            for(ItemStack is  : chest.getBlockInventory().getStorageContents()){
+            for(ItemStack is  : chest.getBlockInventory().getContents()){
                 if(is != null && is.getType() != Material.AIR){
                     items++;
                 }
@@ -82,7 +97,7 @@ public final class TestEvents implements Listener {
             if(items == 0) {
                mnPlayer.sendMessage("&cThis chest is empty");
                Player player = e.getPlayer();
-                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 100f, 100f);
+                //player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 100f, 100f);
                 return;
             }
 
@@ -104,7 +119,7 @@ public final class TestEvents implements Listener {
                     mineNite.getScheduler().scheduleSyncRepeatingTask(mineNite, new Runnable() {
                         @Override
                         public void run() {
-                            loc.getWorld().playEffect(hearts, Effect.HEART,20);
+                           // loc.getWorld().playEffect(hearts, Effect.HEART,20);
 
                         }
                     },10,10);
