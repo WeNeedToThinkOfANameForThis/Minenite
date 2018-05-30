@@ -37,7 +37,8 @@ public final class Build extends Command {
             build.setSizeX(Integer.parseInt(args[0]));
             build.setSizeZ(Integer.parseInt(args[1]));
             build.recalculateBlocks();
-            build.build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+            MNPlayer.build(build,p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+
         }
 
         return false;

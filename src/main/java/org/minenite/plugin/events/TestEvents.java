@@ -19,13 +19,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minenite.plugin.MineNite;
+import org.minenite.plugin.core.managers.GameManager;
 import org.minenite.plugin.core.managers.PlayerManager;
+import org.minenite.plugin.core.objects.Building;
 import org.minenite.plugin.core.objects.MineNitePlayer;
 import org.minenite.plugin.core.objects.buildings.FlatBuilding;
+import org.minenite.plugin.core.objects.enums.GameStatus;
+import org.minenite.plugin.core.objects.events.MinenitePlayerBuildEvent;
 
 @Singleton
 public final class TestEvents implements Listener {
     @Inject private PlayerManager playerManager;
+    @Inject private GameManager gameManager;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
@@ -40,6 +45,9 @@ public final class TestEvents implements Listener {
 
     @EventHandler
     public void onCrafting(CraftItemEvent e){
+        if(gameManager.getGameStatus() == GameStatus.NOT_RUNNING){
+            return;
+        }
         Player p = (Player) e.getWhoClicked();
         MineNitePlayer mnPlayer = playerManager.getPlayer(p);
         e.setCancelled(!mnPlayer.isAllowedToCraft());
@@ -47,6 +55,9 @@ public final class TestEvents implements Listener {
 
     @EventHandler
     public void onCraft(PrepareItemCraftEvent e){
+        if(gameManager.getGameStatus() == GameStatus.NOT_RUNNING){
+            return;
+        }
         Player p = (Player) e.getViewers().get(0);
         MineNitePlayer mnPlayer = playerManager.getPlayer(p);
         if(!mnPlayer.isAllowedToCraft()) {
@@ -63,8 +74,16 @@ public final class TestEvents implements Listener {
                 MNPlayer.sendMessage("&aBuilding Now");
                 FlatBuilding build = new FlatBuilding();
 
-                build.build(p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
+                MNPlayer.build(build, p.getLocation().subtract(build.getSizeX()/2,1,build.getSizeZ()/2));
             }
+        }
+    }
+
+    @EventHandler
+    public void onMineniteBuild(MinenitePlayerBuildEvent e){
+        if(e.getPlayer().getPlayer().getItemInHand().getType() != Material.TNT){
+            e.setCancelled(true);
+            e.getPlayer().sendMessage("&cNah you cant build unless holding tnt!");
         }
     }
 

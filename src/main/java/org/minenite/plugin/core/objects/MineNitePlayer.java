@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.minenite.plugin.MineNite;
 import org.minenite.plugin.core.managers.PlayerManager;
+import org.minenite.plugin.core.objects.events.MinenitePlayerBuildEvent;
 import org.minenite.plugin.core.objects.interfaces.CountdownFunction;
 import org.minenite.plugin.core.utils.time.TimeUtils;
 
@@ -56,7 +57,7 @@ public class MineNitePlayer {
             }
         }, secs * 20).getTaskId();
 
-        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 100f, 100f);
+        //player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 100f, 100f);
 
         int taskID = mineNite.getScheduler().scheduleSyncRepeatingTask(mineNite, new BukkitRunnable() {
             @Override
@@ -67,7 +68,7 @@ public class MineNitePlayer {
                         mineNite.getScheduler().cancelTask(endTask);
                     }
                 } else {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 100f, 100f);
+                 //   player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 100f, 100f);
                 }
             }
         }, 20L, 20L);
@@ -95,7 +96,7 @@ public class MineNitePlayer {
                 player.setLevel(finalI);
                 float f = Float.parseFloat((((100/secs)*finalI)/100)+"");
                 player.setExp(f);
-                player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&a"+finalI),"",0,25,0);
+               // player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&a"+finalI),"",0,25,0);
                 sendMessage("&a"+ finalI);
             });
         }
@@ -104,5 +105,17 @@ public class MineNitePlayer {
             player.setLevel(startLevel);
             player.setExp(startExp);
         });
+    }
+
+    public void build(Building building,Location startLoc){
+        MinenitePlayerBuildEvent event = new MinenitePlayerBuildEvent(this, building, startLoc);
+        // Call the event
+        mineNite.getServer().getPluginManager().callEvent(event);
+        // Check if the event is not cancelled
+        if (!event.isCancelled()) {
+            // Now you do the event
+            event.getBuilding().build(event.getLocation());
+        }
+
     }
 }
