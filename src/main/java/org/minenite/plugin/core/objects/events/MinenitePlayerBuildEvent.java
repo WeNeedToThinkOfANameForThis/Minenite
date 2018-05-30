@@ -15,7 +15,7 @@ import org.minenite.plugin.core.objects.MineNitePlayer;
 // https://www.andrewa.pw
 // ------------------------------
 public final class MinenitePlayerBuildEvent extends Event implements Cancellable {
-    @Getter private static final HandlerList handlers = new HandlerList();
+    @Getter HandlerList handlers = new HandlerList();
     @Setter @Getter boolean cancelled;
 
     @Getter MineNitePlayer player;
@@ -26,6 +26,6 @@ public final class MinenitePlayerBuildEvent extends Event implements Cancellable
         this.player = MNPlayer;
         this.building = building;
         this.location = loc;
-        
+
     }
 }
