@@ -3,6 +3,7 @@ package org.minenite.plugin.commands;
 import com.google.inject.Inject;
 import es.pollitoyeye.vehicles.VehiclesMain;
 import es.pollitoyeye.vehicles.enums.VehicleType;
+import es.pollitoyeye.vehicles.events.VehiclePlaceEvent;
 import es.pollitoyeye.vehicles.interfaces.VehicleSubType;
 import es.pollitoyeye.vehicles.vehicle.Parachute;
 import es.pollitoyeye.vehicles.vehiclemanagers.ParachuteManager;
@@ -37,10 +38,12 @@ public final class Test extends Command {
         if (sender instanceof Player) {
             Player p = (Player) sender;
 
-            VehicleType type = (VehicleType) VehiclesMain.getPlugin().vehicleSubTypesMap.keySet().toArray()[5];
-            ParachuteType subType = new ParachuteType(new ItemStack(Material.LAPIS_BLOCK), new ItemStack(Material.COAL_BLOCK), 10.00, p.getName()+"-PARACHUTE", p.getName()+"-PARACHUTE", 5.00, 100.00, "");
-            ArmorStand tmp = (VehicleType.PARACHUTE).getVehicleManager().spawn(p.getLocation(), (p).getUniqueId().toString(), (subType).getName());
+
+            VehicleSubType sub = VehiclesMain.getPlugin().vehicleSubTypesMap.get(VehicleType.PARACHUTE).get(0);
+            ArmorStand tmp = (VehicleType.PARACHUTE).getVehicleManager().spawn(p.getLocation(), (p).getUniqueId().toString(), (sub).getName());
             tmp.setPassenger(p);
+
+           // VehiclePlaceEvent e = new VehiclePlaceEvent(p,p.getLocation(),VehicleType.PARACHUTE,);
         }
 
         return false;
