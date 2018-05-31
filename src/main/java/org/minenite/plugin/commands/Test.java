@@ -20,6 +20,9 @@ import org.minenite.plugin.core.objects.enums.CommandsEnum;
 import org.minenite.plugin.core.storage.yaml.MFile;
 import org.minenite.plugin.core.utils.player.XPUtils;
 
+import java.util.HashMap;
+import java.util.List;
+
 // ------------------------------
 // Copyright (c) PiggyPiglet & AndrewAubury 2018
 // https://www.piggypiglet.me
@@ -36,11 +39,12 @@ public final class Test extends Command {
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
+
             Player p = (Player) sender;
+            List<VehicleSubType> list = VehiclesMain.getPlugin().vehicleSubTypesMap.get(VehicleType.PARACHUTE);
 
-
-            VehicleSubType sub = VehiclesMain.getPlugin().vehicleSubTypesMap.get(VehicleType.PARACHUTE).get(0);
-            ArmorStand tmp = (VehicleType.PARACHUTE).getVehicleManager().spawn(p.getLocation(), (p).getUniqueId().toString(), (sub).getName());
+            //VehicleSubType sub = list.get(list.size()-1);
+            ArmorStand tmp = (VehicleType.PARACHUTE).getVehicleManager().spawn(p.getLocation(), (p).getUniqueId().toString(), "MINENITE");
             tmp.setPassenger(p);
 
            // VehiclePlaceEvent e = new VehiclePlaceEvent(p,p.getLocation(),VehicleType.PARACHUTE,);
