@@ -21,12 +21,16 @@ repositories {
     maven{
         url = 'http://maven.sk89q.com/repo/'
     }
+    maven {
+        url = 'https://maven.minepos.net/repository/maven-releases/'
+    }
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     compileOnly 'com.boydti:fawe-api:+'
+    compileOnly 'es.pollitoyeye.vehicles:Vehicles:9.3.2'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.0.0-SNAPSHOT'
     compile 'com.google.inject:guice:+'
     compile 'commons-io:commons-io:+'
