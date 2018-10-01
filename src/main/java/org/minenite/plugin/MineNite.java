@@ -49,6 +49,7 @@ public final class MineNite extends JavaPlugin {
         Stream.of(
                 FILES, COMMANDS, LISTENERS
         ).forEach(this::register);
+        getLogger().info("Minenite Started");
     }
 
     private void register(Registerables register) {
